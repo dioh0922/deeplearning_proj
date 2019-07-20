@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>画像投げてボトルを識別</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	</head>
+	<body style="background-color:#FFEEEE">
+		<div class="container-fluid">
+			<form enctype="multipart/form-data" method="post" id="img_form">
+				<h3>JPGを選択すると醤油/めんつゆを識別します。<br></h3>
+				<h4>精度は6割くらいです。</h4>
+				<label>
+				<span class="btn btn-primary">
+					ファイル選択
+					<input type="file" name="test_img" accept="image/*" id="load_img" v-on:change="selected" style="display:none">
+				</span>
+			</label>
+			</form>
+			<img id="img_preview">
+			<div id="result_area">
+				<h2>{{text}}</h2>
+			</div>
+		</div>
+		<script type="text/javascript" src="./img_identifier.js"></script>
+	</body>
+</html>
