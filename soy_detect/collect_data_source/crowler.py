@@ -57,7 +57,7 @@ crawler.crawl(keyword="醤油 ヤマサ", max_num=100, file_idx_offset=idx)
 idx = max_file_idx("soy")
 soy_idx = idx
 
-split_data("soy")	#訓練データとテスト用に分割 (醤油)
+#split_data("soy")	#訓練データとテスト用に分割 (醤油)
 
 #めんつゆの画像を収集する
 crawler = GoogleImageCrawler(storage={"root_dir":"noodle"})
@@ -81,10 +81,10 @@ crawler.crawl(keyword="めんつゆ ヤマサ", max_num=100, file_idx_offset=idx
 idx = max_file_idx("noodle")
 noodle_idx = idx
 
-split_data("noodle")	#訓練データとテスト用に分割 (醤油)
+#split_data("noodle")	#訓練データとテスト用に分割 (醤油)
 
 #テスト用の「なんちゃってオレンジ」の画像を取得する
 crawler = GoogleImageCrawler(storage={"root_dir":"test_data"})
 crawler.crawl(keyword="なんちゃってオレンジ", max_num=10)
 
-print("醤油の画像No:",soy_idx,"\r\n","めんつゆの画像No:",noodle_idx,"\r\n", file=codecs.open("data_memo.txt", "w", "utf-8"))
+#print("醤油の画像No:",soy_idx,"\r\n","めんつゆの画像No:",noodle_idx,"\r\n", file=codecs.open("data_memo.txt", "w", "utf-8"))

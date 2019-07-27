@@ -2,3 +2,5 @@
 *.jpg
 *.bmp
 soy_detect/detect_source/test_data/test.txt
+*.lnk
+soy_detect/train_source/transform_list.txt

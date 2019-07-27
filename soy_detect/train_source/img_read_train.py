@@ -26,7 +26,7 @@ class MyChain(Chain):
 			cn1 = L.Convolution2D(3, 16, 5, pad=2),
 			cn2 = L.Convolution2D(16, 32, 5,pad=2),
 			l1 = L.Linear(None, 500),
-			l2 = L.Linear(None, 2),
+			l2 = L.Linear(None, 3),
 		)
 
 	def __call__(self, x, t):
@@ -43,7 +43,6 @@ class MyChain(Chain):
 画像セットを直接読み込む
 """
 
-soy_class = 1500	#1500までは醤油
 train_dir = "./trans_data/"
 
 imageData = []
@@ -81,8 +80,8 @@ test = tuple_dataset.TupleDataset(imageData[valid_data_idx:], labelData[valid_da
 print("データ設定")
 
 #バッチサイズとエポック数は試行中のため適当
-batch = 10
-epoch = 150
+batch = 100
+epoch = 20
 
 model = MyChain()				#モデルのインスタンスつくる
 optimizer = optimizers.Adam()	#最適化するアルゴリズムの選択	SGD:確率的勾配降下法
