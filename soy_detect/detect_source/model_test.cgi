@@ -27,7 +27,7 @@ class MyChain(Chain):
 			cn1 = L.Convolution2D(3, 16, 5, pad=2),
 			cn2 = L.Convolution2D(16, 32, 5,pad=2),
 			l1 = L.Linear(None, 500),
-			l2 = L.Linear(None, 2),
+			l2 = L.Linear(None, 3),
 		)
 
 	def __call__(self, x, t):

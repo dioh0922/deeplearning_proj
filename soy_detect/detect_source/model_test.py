@@ -17,25 +17,9 @@ from chainer.datasets import TransformDataset
 from chainer.training import extensions
 from chainer.datasets import tuple_dataset
 import datetime
-
-class MyChain(Chain):
-	def __init__(self):
-		super(MyChain, self).__init__(
-			cn1 = L.Convolution2D(3, 16, 5, pad=2),
-			cn2 = L.Convolution2D(16, 32, 5,pad=2),
-			l1 = L.Linear(None, 500),
-			l2 = L.Linear(None, 2),
-		)
-
-	def __call__(self, x, t):
-		return F.softmax_cross_entropy(self.fwd(x), t)
-
-	def fwd(self, x):
-
-		h1 = F.max_pooling_2d(F.relu(self.cn1(x)), 2)
-		h2 = F.max_pooling_2d(F.relu(self.cn2(h1)), 2)
-		h3 = F.dropout(F.relu(self.l1(h2)))
-		return self.l2(h3)
+import sys
+sys.path.append("..")
+from train_source import train_model
 
 def rgb_split(img):
 	img = img.resize((50, 50))
@@ -49,7 +33,7 @@ def rgb_split(img):
 
 dt_st = datetime.datetime.now()
 
-model = MyChain()
+model = train_model.MyChain()
 chainer.serializers.load_npz('check_soy.net', model)
 
 img_dir = "./test.jpg"
