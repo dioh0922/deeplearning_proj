@@ -46,3 +46,5 @@ crawler.crawl(keyword="めんつゆ ヤマサ", max_num=100, file_idx_offset=idx
 #テスト用の「なんちゃってオレンジ」の画像を取得する
 crawler = GoogleImageCrawler(storage={"root_dir":"orange_test_data"})
 crawler.crawl(keyword="なんちゃってオレンジ", max_num=10)
+
+cu.save_to_jpg(save_dir, 0)

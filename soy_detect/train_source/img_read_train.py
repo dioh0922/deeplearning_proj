@@ -1,3 +1,8 @@
+"""
+教師データの画像で学習させるプログラム
+モデルは外部ファイルに定義
+"""
+
 import numpy as np
 import chainer
 import glob
@@ -27,9 +32,10 @@ import train_model	#作成したモデルを読み込む
 
 train_dir = "./trans_data/"
 
-imageData = []
-labelData = []
+imageData = []	#教師データの画像側の配列
+labelData = []	#教師データのラベル側の配列
 
+#jpg画像を並べ替える処理
 def rgb_split(img):
 	r,g,b = img.split()
 	rImgData = np.asarray(np.float32(r) / 255)
@@ -39,6 +45,7 @@ def rgb_split(img):
 	imgData = np.asarray([rImgData, gImgData, bImgData])
 	return imgData
 
+#元データから画像とクラスの変数に統合する処理
 def load_train_data():
 	list = glob.glob(train_dir + "*")
 
@@ -48,13 +55,12 @@ def load_train_data():
 		name = i[13:]
 		class_id = i[20:21]
 		img_src = Image.open(train_dir + name)
-
 		split_data = rgb_split(img_src)
 		imageData.append(split_data)
 		labelData.append(np.int32(class_id))
 
 load_train_data()
-valid_data_idx = np.int32(len(imageData) * 0.9)
+valid_data_idx = np.int32(len(imageData) * 0.9)	#10%を確認用のデータに分ける
 
 train = tuple_dataset.TupleDataset(imageData[0:valid_data_idx], labelData[0:valid_data_idx])
 test = tuple_dataset.TupleDataset(imageData[valid_data_idx:], labelData[valid_data_idx:])
@@ -62,7 +68,7 @@ test = tuple_dataset.TupleDataset(imageData[valid_data_idx:], labelData[valid_da
 print("データ設定")
 
 #バッチサイズとエポック数は試行中のため適当
-batch = 100
+batch = 200
 epoch = 30
 
 model = train_model.MyChain()				#モデルのインスタンスつくる

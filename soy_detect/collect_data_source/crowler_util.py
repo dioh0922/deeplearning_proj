@@ -14,7 +14,7 @@ def save_to_jpg(save_dir, offset):
 	cnt = offset
 	for i in list:
 		cnt += 1
-		rename_str = save_dir + format(cnt, "06") + "_3" + ".jpg"
+		rename_str = save_dir + format(cnt, "06") + ".jpg"
 
 		#拡張子によって保存方法を変える
 		identifier = imghdr.what(i)
@@ -22,11 +22,14 @@ def save_to_jpg(save_dir, offset):
 			transform_image(i, rename_str)
 		elif identifier == "gif":
 			transform_image(i, rename_str)
+		elif identifier == "png":
+			transform_image(i, rename_str)
 		elif identifier == "jpeg":
 			try:
 				img = Image.open(i)
 				img.save(rename_str)
-				os.remove(i)
+				if i[-4:] == "jpeg":
+					os.remove(i)
 			except:
 				print("読み込み失敗")
 

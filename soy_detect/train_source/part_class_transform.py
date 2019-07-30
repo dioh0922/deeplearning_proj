@@ -1,6 +1,8 @@
-#教師用画像の前処理するプログラム
-#元データにクラスを付与(密閉ボトル/旧ボトル/めんつゆ)
-#リサイズした後に教師データ水増しに反転させて別ディレクトリに保存
+"""
+教師用画像の前処理するプログラム
+元データにクラスを付与(密閉ボトル/旧ボトル/めんつゆ)
+リサイズした後に教師データ水増しに反転させて別ディレクトリに保存
+"""
 
 import glob
 import codecs
@@ -36,46 +38,29 @@ def transform_img(file, file_no, mode):
 		resizedImg = read.resize((50, 50))
 		dir_name = save_dir_name + format(trans_no, "06")
 		resizedImg.save(dir_name + "_" + str(class_id) + "." + identifier)
-		save_detail_list(format(trans_no, "06") + "_" + str(class_id) + "." + identifier, trans_no, mode)
 		trans_no += 1
 
 		tmp = resizedImg.transpose(Image.FLIP_TOP_BOTTOM)	#上下反転させる
 		dir_name = save_dir_name + format(trans_no, "06")
 		tmp.save(dir_name + "_" + str(class_id) + "." + identifier)
-		save_detail_list(format(trans_no, "06") + "_" + str(class_id) + "." + identifier, trans_no, mode)
 		trans_no += 1
 
 		tmp = resizedImg.transpose(Image.ROTATE_90)			#左に傾ける
 		dir_name = save_dir_name + format(trans_no, "06")
 		tmp.save(dir_name + "_" + str(class_id) + "." + identifier)
-		save_detail_list(format(trans_no, "06") + "_" + str(class_id) + "." + identifier, trans_no, mode)
 		trans_no += 1
 
 		tmp = resizedImg.transpose(Image.ROTATE_270)		#右に傾ける
 		dir_name = save_dir_name + format(trans_no, "06")
 		tmp.save(dir_name + "_" + str(class_id) + "." + identifier)
-		save_detail_list(format(trans_no, "06") + "_" + str(class_id) + "." + identifier, trans_no, mode)
 		trans_no += 1
 
 		tmp = resizedImg.transpose(Image.FLIP_LEFT_RIGHT)	#左右反転させる
 		dir_name = save_dir_name + format(trans_no, "06")
 		tmp.save(dir_name + "_" + str(class_id) + "." + identifier)
-		save_detail_list(format(trans_no, "06") + "_" + str(class_id) + "." + identifier, trans_no, mode)
 		trans_no += 1
 
 		return trans_no
-
-#教師データの名前とクラスを記録する
-def save_detail_list(data_name, data_no, mode):
-	class_id = 0
-
-	if data_no <= 1645:
-		class_id = 0
-	else:
-		class_id = 1
-
-	class_str = str(class_id) + "\r\n"
-	print(data_name,class_str,end="",file=codecs.open("transform_list.txt", "a", "utf-8"))
 
 #読み込んだファイルをクラス番号を付けて保存し直す
 def set_classifier_img(file, class_id):
@@ -89,6 +74,7 @@ def set_classifier_img(file, class_id):
 	else:
 		read.save(file_str)
 
+#元データは各ディレクトリに入れておき、統一でぅれくとりにコピーする
 print("教師データ前処理開始")
 list = glob.glob("./new_soy/*")
 for i in list:
@@ -102,17 +88,13 @@ list = glob.glob("./old_soy/*")
 for i in list:
 	set_classifier_img(i, 1)
 
-#ペットボトルとか他の画像も与えておく
-"""
 list = glob.glob("./other/*")
 for i in list:
-	set_classifier_img(i, 2)
-"""
+	set_classifier_img(i, 3)
 
 print("リネーム終了")
 
-
-#変換後のクラスの振り方を変更する
+#統一ディレクトリに対して前ファイルに水増し
 list = glob.glob("./train_data/*")
 file_no = 1
 #元データのフォルダから順に読み出し、変換して別フォルダに保存して各クラスを記録する

@@ -12,7 +12,7 @@ class MyChain(Chain):
 			cn1 = L.Convolution2D(None, 16, 5, pad=2),
 			cn2 = L.Convolution2D(None, 32, 5,pad=2),
 			l1 = L.Linear(None, 500),
-			l2 = L.Linear(None, 3),		#出力層は識別するクラス数
+			l2 = L.Linear(None, 4),		#出力層は識別するクラス数
 		)
 
 	def __call__(self, x, t):
