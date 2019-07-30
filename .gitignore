@@ -8,3 +8,6 @@ soy_detect/train_source/transform_list.txt
 *.net
 *.pyc
 soy_detect/train_source/result_list.txt
+*.png
+*.jpeg
+*.gif
