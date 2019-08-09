@@ -13,3 +13,5 @@ soy_detect/train_source/result_list.txt
 *.gif
 soy_detect/detect_source/check_soy.net
 soy_detect/detect_source/check_soy.net
+soy_detect/detect_source/py_train.bat
+*.bat
