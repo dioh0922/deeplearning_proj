@@ -23,16 +23,32 @@ from chainer.training import extensions
 from chainer.datasets import tuple_dataset
 import datetime
 import codecs
-
+import sys
 import train_model	#作成したモデルを読み込む
 
 """
 画像セットを直接読み込む
+引数にバッチサイズ、エポック数を入力する
 """
+
+batch = 5
+epoch = 10
+
+args = sys.argv
+
+if len(args) < 2:
+	print("バッチサイズとエポック数を入力してください")
+	print("ex: 「python ファイル 50 100」")
+	exit()
+else:
+	batch = int(args[1])
+	epoch = int(args[2])
 
 train_dir = "./trans_data/"
 
 imageData = []	#教師データの画像側の配列
+
+
 labelData = []	#教師データのラベル側の配列
 
 #jpg画像を並べ替える処理
@@ -66,10 +82,6 @@ train = tuple_dataset.TupleDataset(imageData[0:valid_data_idx], labelData[0:vali
 test = tuple_dataset.TupleDataset(imageData[valid_data_idx:], labelData[valid_data_idx:])
 
 print("データ設定")
-
-#バッチサイズとエポック数は試行中のため適当
-batch = 200
-epoch = 30
 
 model = train_model.MyChain()				#モデルのインスタンスつくる
 optimizer = optimizers.Adam()	#最適化するアルゴリズムの選択	SGD:確率的勾配降下法

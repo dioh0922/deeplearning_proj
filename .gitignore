@@ -11,3 +11,5 @@ soy_detect/train_source/result_list.txt
 *.png
 *.jpeg
 *.gif
+soy_detect/detect_source/check_soy.net
+soy_detect/detect_source/check_soy.net

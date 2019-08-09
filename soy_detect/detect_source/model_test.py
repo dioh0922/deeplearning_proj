@@ -1,22 +1,15 @@
+"""
+画像(固定のファイル名)を分類器に通す
+.cgiと異なり、関数を提供し外部から呼び出される
+"""
 import numpy as np
 import chainer
-import glob
-import random
 import matplotlib.pyplot as plt
 from PIL import Image
-from chainer import cuda, Function, \
-	report, training, utils, Variable
-from chainer import datasets, iterators, optimizers
-from chainer import Link, Chain, ChainList
-import chainer.functions as F
-import chainer.links as L
-import chainer.serializers as S
-from chainer.training import extensions
-from chainer.datasets import LabeledImageDataset
-from chainer.datasets import TransformDataset
-from chainer.training import extensions
+from chainer import Variable
+from chainer import datasets
+#from chainer import Link, Chain, ChainList
 from chainer.datasets import tuple_dataset
-import datetime
 import sys
 sys.path.append("..")
 from train_source import train_model
@@ -31,29 +24,30 @@ def rgb_split(img):
 	imgData = np.asarray([rImgData, gImgData, bImgData])
 	return imgData
 
-dt_st = datetime.datetime.now()
+#別ファイルから呼ばれて識別結果を返す処理
+def start_test_model():
 
-model = train_model.MyChain()
-chainer.serializers.load_npz('check_soy.net', model)
+	model = train_model.MyChain()
+	chainer.serializers.load_npz('check_soy.net', model)
 
-img_dir = "./test.jpg"
+	img_dir = "./test.jpg"
 
-img = Image.open(img_dir)
+	img = Image.open(img_dir)
 
-split_data = rgb_split(img)
+	split_data = rgb_split(img)
 
-img_arr = []
-class_id = []
+	img_arr = []
+	class_id = []
 
-img_arr.append(split_data)
-class_id.append(0)
+	img_arr.append(split_data)
+	class_id.append(0)
 
-test = tuple_dataset.TupleDataset(img_arr, class_id)
+	test = tuple_dataset.TupleDataset(img_arr, class_id)
 
-x = Variable(np.array([test[0][0]], dtype=np.float32))
+	x = Variable(np.array([test[0][0]], dtype=np.float32))
 
-result = model.fwd(x)	#画像をモデルに通す
+	result = model.fwd(x)	#画像をモデルに通す
 
-classifier = np.argmax(result.data)		#一番大きいものをクラスと識別する
+	classifier = np.argmax(result.data)		#一番大きいものをクラスと識別する
 
-print(classifier)
+	return classifier

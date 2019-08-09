@@ -8,14 +8,23 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<title>画像投げてボトルを識別</title>
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+			crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+			crossorigin="anonymous">
+		</script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+			crossorigin="anonymous">
+		</script>
 	</head>
 	<body style="background-color:#FFEEEE">
 		<div class="container-fluid">
-			<form enctype="multipart/form-data" method="post" id="img_form">
-				<h3>JPGを選択すると醤油/めんつゆを識別します。<br></h3>
+			<form enctype="multipart/form-data" method="post" id="img_form" class="mt-3">
+				<h3>ボトルの写ったJPGを選択すると醤油/めんつゆを識別します。<br></h3>
 				<h4>精度は6割くらいです。</h4>
 				<label>
 				<span class="btn btn-primary">
@@ -25,9 +34,14 @@
 			</label>
 			</form>
 			<img id="img_preview">
-			<div id="result_area">
+			<div id="result_area" class="mb-4" style="border-bottom: solid 3px #CCC;">
 				<h2>{{text}}</h2>
 			</div>
+			<h6><p>こんな画像を識別できます</p></h6>
+			<img src="./typical_oldsoy.jpg">
+			<img src="./typical_newsoy.jpg">
+			<img src="./typical_noodle.jpg">
+			<img src="./typical_dummy.jpg">
 		</div>
 		<script type="text/javascript" src="./img_identifier.js"></script>
 	</body>
